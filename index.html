@@ -7,38 +7,52 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        primary: '#3B82F6',
-                        secondary: '#1F2937',
-                        accent: '#10B981'
+                        // Dark Theme Colors (Updated)
+                        'primary': '#059669', // Emerald Green
+                        'secondary': '#1C2023', // Dark Slate Gray
+                        'bg-dark': '#121417', // Deep Charcoal
+                        'text-light': '#E2E8F0', // Off-White
+                        'card-dark': '#1E2328', // Slightly lighter charcoal
+                        'hover-dark': '#2C323B', // Subtle hover dark
+                        
+                        // New Light Theme Colors (Cleaned up)
+                        'primary-light': '#3B82F6', // Blue
+                        'secondary-light': '#F9FAFB', // Light Gray
+                        'bg-light': '#FFFFFF', // Pure White
+                        'text-dark': '#1F2937', // Dark Grayish Blue
+                        'card-light': '#F3F4F6', // Lighter Card Background
+                        'hover-light': '#E5E7EB', // Subtle hover light
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'bounce-slow': 'bounce 2s infinite',
-                        'pulse-slow': 'pulse 3s infinite',
-                        'fade-in': 'fadeIn 0.8s ease-out',
-                        'slide-up': 'slideUp 0.8s ease-out',
-                        'scale-in': 'scaleIn 0.6s ease-out'
+                        'fade-in-up': 'fadeInUp 1s ease-out',
+                        'slide-in-right': 'slideInRight 1s ease-out',
+                        'pulse-once': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) 1',
+                        'spin-slow': 'spin 3s linear infinite',
+                        'typing': 'typing 3.5s steps(30, end), blink-caret .75s step-end infinite',
+                        // Removed 'blob' animation as the blobs are being removed
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' }
-                        },
-                        fadeIn: {
+                        fadeInUp: {
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' }
                         },
-                        slideUp: {
-                            '0%': { opacity: '0', transform: 'translateY(40px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' }
                         },
-                        scaleIn: {
-                            '0%': { opacity: '0', transform: 'scale(0.8)' },
-                            '100%': { opacity: '1', transform: 'scale(1)' }
-                        }
+                        typing: {
+                            '0%': { width: '0' },
+                            '100%': { width: '100%' }
+                        },
+                        'blink-caret': {
+                            '0%, 100%': { 'border-color': 'transparent' },
+                            '50%': { 'border-color': 'currentColor' }
+                        },
+                        // Removed blob keyframes
                     }
                 }
             }
@@ -46,34 +60,15 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .canvas-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
+        .nav-link.active {
+            font-weight: 600;
+        }
+        .nav-link.active::after {
             width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.6;
         }
-        
-        .skill-bar {
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-        
         .nav-link {
             position: relative;
-            transition: all 0.3s ease;
         }
-        
         .nav-link::after {
             content: '';
             position: absolute;
@@ -81,208 +76,170 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #3B82F6;
+            background: #3B82F6; /* Light theme active */
             transition: width 0.3s ease;
         }
-        
         .nav-link:hover::after {
             width: 100%;
         }
-        
-        .floating-icon {
-            animation: float 4s ease-in-out infinite;
+        .dark .nav-link::after {
+            background: #059669; /* Dark theme active */
         }
-        
-        .floating-icon:nth-child(2) {
-            animation-delay: 1s;
-        }
-        
-        .floating-icon:nth-child(3) {
-            animation-delay: 2s;
-        }
-        
-        .particle {
-            position: absolute;
-            pointer-events: none;
-            opacity: 0;
-            animation: particle-fade 1s ease-out forwards;
-        }
-        
-        @keyframes particle-fade {
-            0% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0);
-            }
-        }
-        
         .fade-in-section {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
-        
         .fade-in-section.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
-        
-        .hero-text {
-            opacity: 0;
-            animation: heroSlideIn 1.2s ease-out 0.3s forwards;
+        .skill-bar {
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        .hero-subtitle {
-            opacity: 0;
-            animation: heroSlideIn 1.2s ease-out 0.6s forwards;
+        /* Removed animation-delay for blobs */
+        /* Updated light-bg-gradient for simplicity */
+        .light-bg-gradient {
+            background-image: none; /* No gradient in light mode */
+            opacity: 0; /* Make it invisible */
         }
-        
-        .hero-buttons {
-            opacity: 0;
-            animation: heroSlideIn 1.2s ease-out 0.9s forwards;
-        }
-        
-        @keyframes heroSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .dark .light-bg-gradient {
+            opacity: 1; /* Keep gradient for dark mode if desired, or set to none as well */
+            background-image: linear-gradient(135deg, #1A3E38, #1C2023, #1A202C); /* Example dark gradient */
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 overflow-x-hidden">
-    <!-- Animated Background Canvas -->
-    <canvas id="bgCanvas" class="canvas-bg"></canvas>
-    
-    <!-- Navigation -->
-    <nav class="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50">
+<body class="bg-bg-light text-text-dark font-sans antialiased dark:bg-bg-dark dark:text-text-light">
+
+    <nav class="fixed w-full bg-bg-light/80 backdrop-blur-sm z-50 transition-colors duration-300 dark:bg-secondary/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <div class="text-2xl font-bold text-primary hover:scale-110 transition-transform cursor-pointer">Vishwahari</div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="nav-link text-gray-600 hover:text-primary">Home</a>
-                    <a href="#about" class="nav-link text-gray-600 hover:text-primary">About</a>
-                    <a href="#skills" class="nav-link text-gray-600 hover:text-primary">Skills</a>
-                    <a href="#experience" class="nav-link text-gray-600 hover:text-primary">Experience</a>
-                    <a href="#projects" class="nav-link text-gray-600 hover:text-primary">Projects</a>
-                    <a href="#contact" class="nav-link text-gray-600 hover:text-primary">Contact</a>
+                <div class="text-2xl font-bold text-primary-light hover:scale-110 transition-transform cursor-pointer dark:text-primary">Vishwahari</div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="nav-link text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">Home</a>
+                    <a href="#about" class="nav-link text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">About</a>
+                    <a href="#skills" class="nav-link text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">Skills</a>
+                    <a href="#experience" class="nav-link text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">Experience</a>
+                    <a href="#projects" class="nav-link text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">Projects</a>
+                    <a href="#contact" class="nav-link text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">Contact</a>
+                    <button id="theme-toggle" type="button" class="text-text-dark hover:text-primary-light focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg text-sm p-2.5 dark:text-gray-400 dark:hover:text-primary">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.071 5.071a1 1 0 00-1.414 0l-.707.707a1 1 0 101.414 1.414l.707-.707a1 1 0 000-1.414zm-.707 10.607a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM3 10a1 1 0 112 0 1 1 0 01-2 0z"></path></svg>
+                    </button>
                 </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-600 hover:text-primary transition-colors">
+                <div class="md:hidden flex items-center">
+                    <button id="theme-toggle-mobile" type="button" class="text-text-dark hover:text-primary-light focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg text-sm p-2.5 mr-2 dark:text-gray-400 dark:hover:text-primary">
+                        <svg id="theme-toggle-dark-icon-mobile" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon-mobile" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.071 5.071a1 1 0 00-1.414 0l-.707.707a1 1 0 101.414 1.414l.707-.707a1 1 0 000-1.414zm-.707 10.607a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM3 10a1 1 0 112 0 1 1 0 01-2 0z"></path></svg>
+                    </button>
+                    <button id="mobile-menu-button" class="text-text-dark hover:text-primary-light transition-colors dark:text-gray-400 dark:hover:text-primary">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+        <div id="mobile-menu" class="hidden md:hidden bg-secondary-light border-t border-gray-300 dark:bg-secondary dark:border-gray-700">
             <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="block px-3 py-2 text-gray-600 hover:text-primary">Home</a>
-                <a href="#about" class="block px-3 py-2 text-gray-600 hover:text-primary">About</a>
-                <a href="#skills" class="block px-3 py-2 text-gray-600 hover:text-primary">Skills</a>
-                <a href="#experience" class="block px-3 py-2 text-gray-600 hover:text-primary">Experience</a>
-                <a href="#projects" class="block px-3 py-2 text-gray-600 hover:text-primary">Projects</a>
-                <a href="#contact" class="block px-3 py-2 text-gray-600 hover:text-primary">Contact</a>
+                <a href="#home" class="block px-3 py-2 text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">Home</a>
+                <a href="#about" class="block px-3 py-2 text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">About</a>
+                <a href="#skills" class="block px-3 py-2 text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">Skills</a>
+                <a href="#experience" class="block px-3 py-2 text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">Experience</a>
+                <a href="#projects" class="block px-3 py-2 text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">Projects</a>
+                <a href="#contact" class="block px-3 py-2 text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary">Contact</a>
+                <button id="theme-toggle-mobile-menu" type="button" class="flex items-center w-full px-3 py-2 text-text-dark hover:text-primary-light focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-lg text-sm dark:text-gray-400 dark:hover:text-primary">
+                    <svg id="theme-toggle-dark-icon-mobile-menu" class="hidden w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon-mobile-menu" class="hidden w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 01-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.071 5.071a1 1 0 00-1.414 0l-.707.707a1 1 0 101.414 1.414l.707-.707a1 1 0 000-1.414zm-.707 10.607a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM3 10a1 1 0 112 0 1 1 0 01-2 0z"></path></svg>
+                    <span class="ml-2">Toggle Theme</span>
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="pt-20 pb-16 bg-gradient-to-br from-blue-50 to-indigo-100 relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center">
-                <div class="w-32 h-32 mx-auto mb-8 rounded-full overflow-hidden floating-icon shadow-2xl">
-                    <img src="photo.jpg" alt="Vishwahari" class="w-full h-full object-cover">
-                </div>
-                <h1 class="hero-text text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-                    Hi, I'm <span class="text-primary">Vishwahari</span>
+    <section id="home" class="min-h-screen flex items-center pt-20 pb-16 relative overflow-hidden bg-bg-light dark:bg-bg-dark">
+        <div class="absolute inset-0 z-0 opacity-0 light-bg-gradient dark:opacity-10 dark:light-theme-bg-off">
+            <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-600 rounded-full mix-blend-screen filter blur-xl animate-blob animation-delay-2000 dark:mix-blend-multiply dark:bg-purple-600"></div>
+            <div class="absolute top-1/2 right-1/4 w-72 h-72 bg-purple-600 rounded-full mix-blend-screen filter blur-xl animate-blob animation-delay-4000 dark:mix-blend-multiply dark:bg-primary"></div>
+            <div class="absolute bottom-1/4 left-1/3 w-72 h-72 bg-primary-light rounded-full mix-blend-screen filter blur-xl animate-blob dark:mix-blend-multiply dark:bg-blue-600"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-12 relative z-10 animate-fade-in-up">
+            <div class="text-center md:text-left md:w-1/2">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-text-dark mb-4 inline-block overflow-hidden whitespace-nowrap border-r-4 border-primary-light pr-2 animate-typing dark:text-text-light dark:border-primary">
+                    Hi, I'm <span class="text-primary-light dark:text-primary">Vishwahari</span>
                 </h1>
-                <p class="hero-subtitle text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                <p class="text-gray-600 text-xl md:text-2xl mb-8 font-light animate-slide-in-right dark:text-gray-400">
                     AI & ML Enthusiast | Java Developer | Problem Solver
                 </p>
-                <div class="hero-buttons flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#contact" class="bg-primary text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-all duration-300 font-semibold hover:scale-105 hover:shadow-lg">
-                        Get In Touch
-                    </a>
-                    <a href="#projects" class="border-2 border-primary text-primary px-8 py-3 rounded-lg hover:bg-primary hover:text-white transition-all duration-300 font-semibold hover:scale-105 hover:shadow-lg">
-                        View My Work
-                    </a>
-                    <a href="Resume.pdf" download class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-all duration-300 font-semibold hover:scale-105 hover:shadow-lg flex items-center justify-center">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="Resume.pdf" download class="bg-primary-light text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors duration-300 font-semibold shadow-lg flex items-center justify-center transform hover:scale-105 animate-pulse-once dark:bg-primary dark:hover:bg-green-600 dark:text-secondary">
                         <i class="fas fa-download mr-2"></i>
-                        Download Resume
+                        Download CV
+                    </a>
+                    <a href="#projects" class="border-2 border-primary-light text-primary-light px-8 py-3 rounded-lg hover:bg-primary-light hover:text-white transition-colors duration-300 font-semibold flex items-center justify-center transform hover:scale-105 dark:border-primary dark:text-primary dark:hover:bg-primary dark:hover:text-secondary">
+                        <i class="fas fa-laptop-code mr-2"></i>
+                        See My Projects
                     </a>
                 </div>
             </div>
-        </div>
-        
-        <!-- Floating Icons -->
-        <div class="absolute top-20 left-10 text-4xl text-primary/20 floating-icon">
-            <i class="fas fa-code"></i>
-        </div>
-        <div class="absolute top-40 right-20 text-3xl text-purple-400/20 floating-icon">
-            <i class="fas fa-palette"></i>
-        </div>
-        <div class="absolute bottom-20 left-20 text-3xl text-blue-400/20 floating-icon">
-            <i class="fas fa-rocket"></i>
+            <div class="w-64 h-64 md:w-80 md:h-80 relative flex-shrink-0 animate-fade-in-up">
+                <div class="absolute inset-0 rounded-full bg-gradient-to-br from-primary-light to-purple-600 opacity-75 animate-spin-slow dark:from-primary"></div>
+                <div class="relative w-full h-full rounded-full overflow-hidden border-4 border-primary/50 shadow-2xl z-10 transform hover:scale-105 transition-transform duration-300">
+                    <img src="photo.jpg" alt="Vishwahari" class="w-full h-full object-cover">
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-16 bg-white fade-in-section">
+    <section id="about" class="py-20 bg-card-light fade-in-section dark:bg-card-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">About Me</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <h2 class="text-text-dark text-4xl font-bold mb-2 dark:text-text-light">About Me</h2>
+                <div class="w-24 h-1 bg-primary-light dark:bg-primary mx-auto"></div>
             </div>
             <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Who I Am</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        🚀 Passionate about AI & ML to create real-world impact
+                <div class="space-y-6">
+                    <p class="text-gray-600 leading-relaxed text-lg dark:text-gray-400">
+                        🚀 I am a passionate AI & ML enthusiast with a keen interest in developing intelligent systems that solve real-world problems. My journey involves continuous learning and applying my skills in various domains.
                     </p>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        💡 Skilled in Java, Python, and Web Development
+                    <p class="text-gray-600 leading-relaxed text-lg dark:text-gray-400">
+                        💡 I possess strong problem-solving skills and am proficient in programming languages like Java and Python. My expertise also extends to web development, allowing me to build complete applications from the ground up.
                     </p>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        🌱 Always exploring new technologies to innovate and solve challenges
+                    <p class="text-gray-600 leading-relaxed text-lg dark:text-gray-400">
+                        🌱 I'm always on the lookout for new challenges and opportunities to grow my skills, collaborate with others, and contribute to innovative projects.
                     </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-primary hover:text-blue-600 transition-all duration-300 hover:scale-125">
+                    <div class="flex space-x-4 pt-4">
+                        <a href="#" class="text-text-dark hover:text-primary-light transition-colors duration-300 transform hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
                             <i class="fab fa-linkedin text-2xl"></i>
                         </a>
-                        <a href="#" class="text-primary hover:text-blue-600 transition-all duration-300 hover:scale-125">
+                        <a href="#" class="text-text-dark hover:text-primary-light transition-colors duration-300 transform hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
                             <i class="fab fa-github text-2xl"></i>
                         </a>
-                        <a href="#" class="text-primary hover:text-blue-600 transition-all duration-300 hover:scale-125">
+                        <a href="#" class="text-text-dark hover:text-primary-light transition-colors duration-300 transform hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
                             <i class="fab fa-twitter text-2xl"></i>
                         </a>
                     </div>
                 </div>
-                <div class="bg-gray-100 p-8 rounded-lg card-hover">
-                    <h4 class="text-xl font-semibold text-gray-900 mb-4">Quick Facts</h4>
-                    <div class="space-y-4">
-                        <div class="flex items-start">
-                            <span class="text-gray-600 font-medium w-24 flex-shrink-0">Education:</span>
-                            <span class="text-gray-800 flex-1">B.E. in Artificial Intelligence & Machine Learning</span>
+                <div class="bg-hover-light p-8 rounded-lg shadow-lg dark:bg-hover-dark">
+                    <h4 class="text-text-dark text-xl font-semibold mb-4 dark:text-text-light">Quick Facts</h4>
+                    <div class="space-y-4 text-gray-600 dark:text-gray-400">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-graduation-cap text-primary-light dark:text-primary"></i>
+                            <span class="font-medium text-text-dark dark:text-text-light">Education:</span>
+                            <span class="flex-1">B.E. in Artificial Intelligence & Machine Learning</span>
                         </div>
-                        <div class="flex items-start">
-                            <span class="text-gray-600 font-medium w-24 flex-shrink-0">Experience:</span>
-                            <span class="text-gray-800 flex-1">Fresher | Internship at alfaTKG Integrated Solutions India Pvt Ltd and Certainti.AI</span>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-briefcase text-primary-light dark:text-primary"></i>
+                            <span class="font-medium text-text-dark dark:text-text-light">Experience:</span>
+                            <span class="flex-1">Fresher | Intern at alfaTKG and Certainti.AI</span>
                         </div>
-                        <div class="flex items-start">
-                            <span class="text-gray-600 font-medium w-24 flex-shrink-0">Location:</span>
-                            <span class="text-gray-800 flex-1">Tiruchengode, Tamil Nadu, India</span>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-map-marker-alt text-primary-light dark:text-primary"></i>
+                            <span class="font-medium text-text-dark dark:text-text-light">Location:</span>
+                            <span class="flex-1">Tiruchengode, Tamil Nadu, India</span>
                         </div>
-                        <div class="flex items-start">
-                            <span class="text-gray-600 font-medium w-24 flex-shrink-0">Interests:</span>
-                            <span class="text-gray-800 flex-1">AI & ML, Java Development, Web Development, Problem Solving, Automation</span>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-heart text-primary-light dark:text-primary"></i>
+                            <span class="font-medium text-text-dark dark:text-text-light">Interests:</span>
+                            <span class="flex-1">AI & ML, Java, Web Dev, Automation</span>
                         </div>
                     </div>
                 </div>
@@ -290,174 +247,135 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-16 bg-gray-50 fade-in-section">
+    <section id="skills" class="py-20 fade-in-section bg-bg-light dark:bg-bg-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Skills & Expertise</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <h2 class="text-text-dark text-4xl font-bold mb-2 dark:text-text-light">Skills & Expertise</h2>
+                <div class="w-24 h-1 bg-primary-light dark:bg-primary mx-auto"></div>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Technical Skills -->
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover">
-                    <div class="text-primary mb-4">
+                <div class="bg-card-light p-6 rounded-lg shadow-lg hover:bg-hover-light transition-colors duration-300 dark:bg-card-dark dark:hover:bg-hover-dark">
+                    <div class="text-primary-light mb-4 dark:text-primary">
                         <i class="fas fa-code text-3xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Technical Skills</h3>
+                    <h3 class="text-text-dark text-xl font-semibold mb-4 dark:text-text-light">Technical Skills</h3>
                     <div class="space-y-3">
                         <div>
                             <div class="flex justify-between mb-1">
-                                <span class="text-sm text-gray-600">Python</span>
-                                <span class="text-sm text-gray-600">70%</span>
+                                <span class="text-gray-600 text-sm dark:text-gray-400">Python</span>
+                                <span class="text-gray-600 text-sm dark:text-gray-400">70%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                                <div class="skill-bar bg-primary h-2 rounded-full" style="width: 0%" data-width="70%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-sm text-gray-600">Java</span>
-                                <span class="text-sm text-gray-600">85%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                                <div class="skill-bar bg-primary h-2 rounded-full" style="width: 0%" data-width="85%"></div>
+                            <div class="w-full bg-hover-light rounded-full h-2 overflow-hidden dark:bg-gray-700">
+                                <div class="skill-bar h-2 rounded-full bg-primary-light dark:bg-primary" style="width: 0%" data-width="70"></div>
                             </div>
                         </div>
                         <div>
                             <div class="flex justify-between mb-1">
-                                <span class="text-sm text-gray-600">Web Development (HTML, CSS, JavaScript, Flask)</span>
-                                <span class="text-sm text-gray-600">80%</span>
+                                <span class="text-gray-600 text-sm dark:text-gray-400">Java</span>
+                                <span class="text-gray-600 text-sm dark:text-gray-400">85%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                                <div class="skill-bar bg-primary h-2 rounded-full" style="width: 0%" data-width="80%"></div>
+                            <div class="w-full bg-hover-light rounded-full h-2 overflow-hidden dark:bg-gray-700">
+                                <div class="skill-bar h-2 rounded-full bg-primary-light dark:bg-primary" style="width: 0%" data-width="85"></div>
                             </div>
                         </div>
                         <div>
                             <div class="flex justify-between mb-1">
-                                <span class="text-sm text-gray-600">SQL (MySQL, PostgreSQL)</span>
-                                <span class="text-sm text-gray-600">80%</span>
+                                <span class="text-gray-600 text-sm dark:text-gray-400">Web Development (HTML, CSS, JS, Flask)</span>
+                                <span class="text-gray-600 text-sm dark:text-gray-400">80%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                                <div class="skill-bar bg-primary h-2 rounded-full" style="width: 0%" data-width="80%"></div>
+                            <div class="w-full bg-hover-light rounded-full h-2 overflow-hidden dark:bg-gray-700">
+                                <div class="skill-bar h-2 rounded-full bg-primary-light dark:bg-primary" style="width: 0%" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-600 text-sm dark:text-gray-400">SQL (MySQL, PostgreSQL)</span>
+                                <span class="text-gray-600 text-sm dark:text-gray-400">80%</span>
+                            </div>
+                            <div class="w-full bg-hover-light rounded-full h-2 overflow-hidden dark:bg-gray-700">
+                                <div class="skill-bar h-2 rounded-full bg-primary-light dark:bg-primary" style="width: 0%" data-width="80"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Soft Skills -->
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover">
-                    <div class="text-primary mb-4">
+                <div class="bg-card-light p-6 rounded-lg shadow-lg hover:bg-hover-light transition-colors duration-300 dark:bg-card-dark dark:hover:bg-hover-dark">
+                    <div class="text-primary-light mb-4 dark:text-primary">
                         <i class="fas fa-users text-3xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Soft Skills</h3>
-                    <div class="space-y-3">
-                        <div class="flex items-center hover:translate-x-2 transition-transform duration-300">
-                            <i class="fas fa-check text-green-500 mr-3"></i>
-                            <span class="text-gray-700">Problem Solving</span>
+                    <h3 class="text-text-dark text-xl font-semibold mb-4 dark:text-text-light">Soft Skills</h3>
+                    <div class="space-y-3 text-gray-600 dark:text-gray-400">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary"></i>
+                            <span>Problem Solving</span>
                         </div>
-                        <div class="flex items-center hover:translate-x-2 transition-transform duration-300">
-                            <i class="fas fa-check text-green-500 mr-3"></i>
-                            <span class="text-gray-700">Adaptability</span>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary"></i>
+                            <span>Adaptability</span>
                         </div>
-                        <div class="flex items-center hover:translate-x-2 transition-transform duration-300">
-                            <i class="fas fa-check text-green-500 mr-3"></i>
-                            <span class="text-gray-700">Team Player</span>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary"></i>
+                            <span>Team Player</span>
                         </div>
-                        <div class="flex items-center hover:translate-x-2 transition-transform duration-300">
-                            <i class="fas fa-check text-green-500 mr-3"></i>
-                            <span class="text-gray-700">Critical Thinking</span>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary"></i>
+                            <span>Critical Thinking</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tools & Technologies -->
-                <div class="bg-white p-6 rounded-lg shadow-sm card-hover">
-                    <div class="text-primary mb-4">
+                <div class="bg-card-light p-6 rounded-lg shadow-lg hover:bg-hover-light transition-colors duration-300 dark:bg-card-dark dark:hover:bg-hover-dark">
+                    <div class="text-primary-light mb-4 dark:text-primary">
                         <i class="fas fa-tools text-3xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Tools & Technologies</h3>
+                    <h3 class="text-text-dark text-xl font-semibold mb-4 dark:text-text-light">Tools & Technologies</h3>
                     <div class="flex flex-wrap gap-2">
-                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm hover:scale-110 transition-transform duration-300 cursor-pointer">Google Colab</span>
-                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm hover:scale-110 transition-transform duration-300 cursor-pointer">Jupyter Notebook</span>
-                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm hover:scale-110 transition-transform duration-300 cursor-pointer">Git</span>
-                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm hover:scale-110 transition-transform duration-300 cursor-pointer">GitHub</span>
-                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm hover:scale-110 transition-transform duration-300 cursor-pointer">VS Code</span>
+                        <span class="bg-gray-300 text-gray-800 px-3 py-1 rounded-full text-sm dark:bg-gray-700 dark:text-gray-300">Google Colab</span>
+                        <span class="bg-gray-300 text-gray-800 px-3 py-1 rounded-full text-sm dark:bg-gray-700 dark:text-gray-300">Jupyter Notebook</span>
+                        <span class="bg-gray-300 text-gray-800 px-3 py-1 rounded-full text-sm dark:bg-gray-700 dark:text-gray-300">Git</span>
+                        <span class="bg-gray-300 text-gray-800 px-3 py-1 rounded-full text-sm dark:bg-gray-700 dark:text-gray-300">GitHub</span>
+                        <span class="bg-gray-300 text-gray-800 px-3 py-1 rounded-full text-sm dark:bg-gray-700 dark:text-gray-300">VS Code</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="py-16 bg-white fade-in-section">
+    <section id="experience" class="py-20 bg-card-light fade-in-section dark:bg-card-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Work Experience</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <h2 class="text-text-dark text-4xl font-bold mb-2 dark:text-text-light">Work Experience</h2>
+                <div class="w-24 h-1 bg-primary-light mx-auto dark:bg-primary"></div>
             </div>
-            <div class="space-y-8">
-                <!-- Experience Item 1 -->
-                <div class="border-l-4 border-primary pl-8 relative card-hover">
-                    <div class="absolute -left-2 w-4 h-4 bg-primary rounded-full"></div>
-                    <div class="bg-gray-50 p-6 rounded-lg">
+            <div class="space-y-12">
+                <div class="relative pl-8 md:pl-16 after:content-[''] after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1 after:bg-primary-light/50 hover:after:bg-primary-light transition-colors duration-300 group dark:after:bg-primary/50 dark:hover:after:bg-primary">
+                    <div class="absolute -left-2 top-0 w-4 h-4 bg-primary-light rounded-full group-hover:animate-pulse-once dark:bg-primary"></div>
+                    <div class="bg-hover-light p-8 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 dark:bg-hover-dark dark:hover:shadow-2xl">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                            <h3 class="text-xl font-semibold text-gray-900">AI Data Labelling Intern</h3>
-                            <span class="text-primary font-medium">alfaTKG Integrated Solutions India Pvt Ltd</span>
+                            <h3 class="text-text-dark text-xl font-semibold mb-4 dark:text-text-light">AI Data Labelling Intern</h3>
+                            <span class="text-primary-light font-medium dark:text-primary">alfaTKG Integrated Solutions India Pvt Ltd</span>
                         </div>
-                        <p class="text-gray-600 mb-2">July 2024 – September 2024</p>
-                        <p class="text-gray-700 leading-relaxed">
-                            Worked on AI data labeling for industrial automation, focusing on video processing and image categorization.
-                        </p>
-                        <ul class="mt-4 space-y-2">
-                            <li class="flex items-start hover:translate-x-2 transition-transform duration-300">
-                                <i class="fas fa-arrow-right text-primary mt-1 mr-2 text-sm"></i>
-                                <span class="text-gray-700">Collected videos from live cameras</span>
-                            </li>
-                            <li class="flex items-start hover:translate-x-2 transition-transform duration-300">
-                                <i class="fas fa-arrow-right text-primary mt-1 mr-2 text-sm"></i>
-                                <span class="text-gray-700">Extracted and cleaned images from videos</span>
-                            </li>
-                            <li class="flex items-start hover:translate-x-2 transition-transform duration-300">
-                                <i class="fas fa-arrow-right text-primary mt-1 mr-2 text-sm"></i>
-                                <span class="text-gray-700">Categorized images into actions (break, preparation, welding, door open/close, etc.)</span>
-                            </li>
-                            <li class="flex items-start hover:translate-x-2 transition-transform duration-300">
-                                <i class="fas fa-arrow-right text-primary mt-1 mr-2 text-sm"></i>
-                                <span class="text-gray-700">Helped improve AI understanding for industrial automation</span>
-                            </li>
+                        <p class="text-gray-600 mb-2 font-light dark:text-gray-400">July 2024 – September 2024</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed dark:text-gray-400">
+                            <li>Worked on AI data labeling for industrial automation, focusing on video processing and image categorization.</li>
+                            <li>Collected videos from live cameras, extracted and cleaned images, and categorized them into specific actions.</li>
+                            <li>Helped improve AI understanding for industrial automation processes.</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Experience Item 2 -->
-                <div class="border-l-4 border-primary pl-8 relative card-hover">
-                    <div class="absolute -left-2 w-4 h-4 bg-primary rounded-full"></div>
-                    <div class="bg-gray-50 p-6 rounded-lg">
+                <div class="relative pl-8 md:pl-16 after:content-[''] after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1 after:bg-primary-light/50 hover:after:bg-primary-light transition-colors duration-300 group dark:after:bg-primary/50 dark:hover:after:bg-primary">
+                    <div class="absolute -left-2 top-0 w-4 h-4 bg-primary-light rounded-full group-hover:animate-pulse-once dark:bg-primary"></div>
+                    <div class="bg-hover-light p-8 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 dark:bg-hover-dark dark:hover:shadow-2xl">
                         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                            <h3 class="text-xl font-semibold text-gray-900">AI Intern</h3>
-                            <span class="text-primary font-medium">Certainti.AI</span>
+                            <h3 class="text-text-dark text-xl font-semibold mb-4 dark:text-text-light">AI Intern</h3>
+                            <span class="text-primary-light font-medium dark:text-primary">Certainti.AI</span>
                         </div>
-                        <p class="text-gray-600 mb-2">February 2025 – May 2025</p>
-                        <p class="text-gray-700 leading-relaxed">
-                            Worked on AI projects involving data search, intent frameworks, and text processing.
-                        </p>
-                        <ul class="mt-4 space-y-2">
-                            <li class="flex items-start hover:translate-x-2 transition-transform duration-300">
-                                <i class="fas fa-arrow-right text-primary mt-1 mr-2 text-sm"></i>
-                                <span class="text-gray-700">Wrote project documentation</span>
-                            </li>
-                            <li class="flex items-start hover:translate-x-2 transition-transform duration-300">
-                                <i class="fas fa-arrow-right text-primary mt-1 mr-2 text-sm"></i>
-                                <span class="text-gray-700">Used ChromaDB and FAISS for improving data search</span>
-                            </li>
-                            <li class="flex items-start hover:translate-x-2 transition-transform duration-300">
-                                <i class="fas fa-arrow-right text-primary mt-1 mr-2 text-sm"></i>
-                                <span class="text-gray-700">Worked on intent framework using MySQL</span>
-                            </li>
-                            <li class="flex items-start hover:translate-x-2 transition-transform duration-300">
-                                <i class="fas fa-arrow-right text-primary mt-1 mr-2 text-sm"></i>
-                                <span class="text-gray-700">Processed text data and generated summaries</span>
-                            </li>
+                        <p class="text-gray-600 mb-2 font-light dark:text-gray-400">February 2025 – May 2025</p>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed dark:text-gray-400">
+                            <li>Worked on AI projects involving data search, intent frameworks, and text processing.</li>
+                            <li>Used ChromaDB and FAISS for improving data search.</li>
+                            <li>Developed an intent framework using MySQL and processed text data to generate summaries.</li>
                         </ul>
                     </div>
                 </div>
@@ -465,85 +383,97 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-16 bg-gray-50 fade-in-section">
+    <section id="projects" class="py-20 fade-in-section bg-bg-light dark:bg-bg-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Featured Projects</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <h2 class="text-text-dark text-4xl font-bold mb-2 dark:text-text-light">Featured Projects</h2>
+                <div class="w-24 h-1 bg-primary-light mx-auto dark:bg-primary"></div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="bg-white rounded-lg shadow-sm overflow-hidden card-hover group">
-                    <div class="h-48 bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center relative overflow-hidden">
-                        <i class="fas fa-robot text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
-                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
+                <div class="bg-card-light rounded-lg shadow-lg overflow-hidden hover:bg-hover-light transition-colors duration-300 group dark:bg-card-dark dark:hover:bg-hover-dark">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Eco Weed AI Robot</h3>
-                        <p class="text-gray-600 mb-2 text-sm font-medium">Jan 2024 – Present</p>
-                        <p class="text-gray-600 mb-4">
+                        <div class="flex items-center mb-4 space-x-4">
+                             <div class="w-12 h-12 bg-primary-light/20 text-primary-light flex items-center justify-center rounded-full transform group-hover:scale-110 transition-transform duration-300 dark:bg-primary/20 dark:text-primary">
+                                <i class="fas fa-robot text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-text-dark text-xl font-semibold dark:text-text-light">Eco Weed AI Robot</h3>
+                                <p class="text-gray-600 text-sm dark:text-gray-400">Jan 2024 – Present</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4 font-light dark:text-gray-400">
                             AI-powered robot to detect and remove weeds in paddy fields. Developed an AI robot using Python and OpenCV for weed detection and removal.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">Python</span>
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">OpenCV</span>
-                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">TensorFlow</span>
-                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">Raspberry Pi</span>
-                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">Arduino</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">Python</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">OpenCV</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">TensorFlow</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">Raspberry Pi</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">Arduino</span>
                         </div>
-                        <div class="flex space-x-3">
-                            <span class="text-gray-400 font-medium">Project in Development</span>
+                        <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
+                            <span class="font-medium">Project in Development</span>
+                            <i class="fas fa-arrow-right text-primary-light group-hover:translate-x-1 transition-transform duration-300 dark:text-primary"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- Project 2 -->
-                <div class="bg-white rounded-lg shadow-sm overflow-hidden card-hover group">
-                    <div class="h-48 bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center relative overflow-hidden">
-                        <i class="fas fa-brain text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
-                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
+                <div class="bg-card-light rounded-lg shadow-lg overflow-hidden hover:bg-hover-light transition-colors duration-300 group dark:bg-card-dark dark:hover:bg-hover-dark">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Mental Health Prediction App</h3>
-                        <p class="text-gray-600 mb-2 text-sm font-medium">Jun 2024 – Jul 2024</p>
-                        <p class="text-gray-600 mb-4">
+                        <div class="flex items-center mb-4 space-x-4">
+                            <div class="w-12 h-12 bg-primary-light/20 text-primary-light flex items-center justify-center rounded-full transform group-hover:scale-110 transition-transform duration-300 dark:bg-primary/20 dark:text-primary">
+                                <i class="fas fa-brain text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-text-dark text-xl font-semibold dark:text-text-light">Mental Health Prediction App</h3>
+                                <p class="text-gray-600 text-sm dark:text-gray-400">Jun 2024 – Jul 2024</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4 font-light dark:text-gray-400">
                             Machine learning-based web app to predict stress levels from lifestyle data. Built a Random Forest model with SMOTE for balanced predictions.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">Python</span>
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">Streamlit</span>
-                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">scikit-learn</span>
-                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">Plotly</span>
-                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">Pandas</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">Python</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">Streamlit</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">scikit-learn</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">Plotly</span>
                         </div>
-                        <div class="flex space-x-3">
-                            <a href="https://github.com/Vishwahari/Mental-Health-Prediction-App-Based-on-Lifestyle-Data" target="_blank" class="text-primary hover:text-blue-600 font-medium hover:underline">Source Code</a>
+                        <div class="flex justify-between items-center">
+                            <a href="https://github.com/Vishwahari/Mental-Health-Prediction-App-Based-on-Lifestyle-Data" target="_blank" class="text-primary-light hover:underline font-medium flex items-center space-x-2 dark:text-primary">
+                                <span>Source Code</span>
+                                <i class="fas fa-external-link-alt text-sm"></i>
+                            </a>
+                            <i class="fas fa-arrow-right text-primary-light group-hover:translate-x-1 transition-transform duration-300 dark:text-primary"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- Project 3 -->
-                <div class="bg-white rounded-lg shadow-sm overflow-hidden card-hover group">
-                    <div class="h-48 bg-gradient-to-r from-purple-400 to-pink-500 flex items-center justify-center relative overflow-hidden">
-                        <i class="fas fa-comments text-6xl text-white group-hover:scale-110 transition-transform duration-300"></i>
-                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
+                <div class="bg-card-light rounded-lg shadow-lg overflow-hidden hover:bg-hover-light transition-colors duration-300 group dark:bg-card-dark dark:hover:bg-hover-dark">
                     <div class="p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Educational AI Chatbot</h3>
-                        <p class="text-gray-600 mb-2 text-sm font-medium">Dec 2024 – Jan 2025</p>
-                        <p class="text-gray-600 mb-4">
+                        <div class="flex items-center mb-4 space-x-4">
+                            <div class="w-12 h-12 bg-primary-light/20 text-primary-light flex items-center justify-center rounded-full transform group-hover:scale-110 transition-transform duration-300 dark:bg-primary/20 dark:text-primary">
+                                <i class="fas fa-comments text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-text-dark text-xl font-semibold dark:text-text-light">Educational AI Chatbot</h3>
+                                <p class="text-gray-600 text-sm dark:text-gray-400">Dec 2024 – Jan 2025</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4 font-light dark:text-gray-400">
                             Interactive web-based chatbot to guide students in academics and career planning. Designed a multi-page website with login, course selection, and AI-driven guidance.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">Python (Flask)</span>
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">HTML</span>
-                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">CSS</span>
-                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">JavaScript</span>
-                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm hover:scale-105 transition-transform duration-300">Render</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">Python (Flask)</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">HTML</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">CSS</span>
+                            <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">JavaScript</span>
                         </div>
-                        <div class="flex space-x-3">
-                            <a href="https://github.com/Vishwahari/Edubot" target="_blank" class="text-primary hover:text-blue-600 font-medium hover:underline">Source Code</a>
+                        <div class="flex justify-between items-center">
+                            <a href="https://github.com/Vishwahari/Edubot" target="_blank" class="text-primary-light hover:underline font-medium flex items-center space-x-2 dark:text-primary">
+                                <span>Source Code</span>
+                                <i class="fas fa-external-link-alt text-sm"></i>
+                            </a>
+                            <i class="fas fa-arrow-right text-primary-light group-hover:translate-x-1 transition-transform duration-300 dark:text-primary"></i>
                         </div>
                     </div>
                 </div>
@@ -551,146 +481,106 @@
         </div>
     </section>
 
-    <!-- Education Section -->
-    <section class="py-16 bg-white fade-in-section">
+    <section class="py-20 bg-card-light fade-in-section dark:bg-card-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Education</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                <h2 class="text-text-dark text-4xl font-bold mb-2 dark:text-text-light">Education</h2>
+                <div class="w-24 h-1 bg-primary-light mx-auto dark:bg-primary"></div>
             </div>
-            <div class="max-w-3xl mx-auto">
-                <div class="bg-gray-50 p-8 rounded-lg card-hover">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform duration-300">
-                            <i class="fas fa-graduation-cap text-2xl text-white"></i>
-                        </div>
-                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">B.E – Artificial Intelligence and Machine Learning</h3>
-                        <p class="text-primary font-medium mb-2">K. S. Rangasamy College of Technology, Tiruchengode</p>
-                        <p class="text-gray-600 mb-4">2022 – 2026</p>
-                        <p class="text-gray-700 leading-relaxed">
-                            Pursuing a comprehensive degree in AI & ML with focus on machine learning algorithms, deep learning, computer vision, and practical applications in real-world scenarios.
-                        </p>
+            <div class="max-w-3xl mx-auto bg-hover-light p-8 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 dark:bg-hover-dark">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-primary-light rounded-full flex items-center justify-center mx-auto mb-4 animate-spin-slow dark:bg-primary">
+                        <i class="fas fa-graduation-cap text-white dark:text-secondary"></i>
                     </div>
+                    <h3 class="text-text-dark text-2xl font-semibold mb-2 dark:text-text-light">B.E – Artificial Intelligence and Machine Learning</h3>
+                    <p class="text-primary-light font-medium mb-2 dark:text-primary">K. S. Rangasamy College of Technology, Tiruchengode</p>
+                    <p class="text-gray-600 mb-4 dark:text-gray-400">2022 – 2026</p>
+                    <p class="text-gray-600 leading-relaxed dark:text-gray-400">
+                        Pursuing a comprehensive degree in AI & ML with a focus on machine learning algorithms, deep learning, computer vision, and practical applications in real-world scenarios.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-gray-50 fade-in-section">
+    <section id="contact" class="py-20 fade-in-section bg-bg-light dark:bg-bg-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-                <div class="w-24 h-1 bg-primary mx-auto"></div>
-                <p class="text-xl text-gray-600 mt-4">I'd love to hear from you. Let's work together!</p>
+                <h2 class="text-text-dark text-4xl font-bold mb-2 dark:text-text-light">Get In Touch</h2>
+                <div class="w-24 h-1 bg-primary-light mx-auto dark:bg-primary"></div>
+                <p class="text-gray-600 text-xl mt-4 dark:text-gray-400">I'd love to hear from you. Let's work together!</p>
             </div>
             <div class="grid md:grid-cols-2 gap-12">
                 <div>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Contact Information</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center hover:translate-x-2 transition-transform duration-300">
-                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 hover:scale-110 transition-transform duration-300">
-                                <i class="fas fa-envelope text-white"></i>
+                    <h3 class="text-text-dark text-2xl font-semibold mb-6 dark:text-text-light">Contact Information</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center p-4 bg-card-light rounded-lg shadow-lg hover:bg-hover-light transition-colors duration-300 dark:bg-card-dark dark:hover:bg-hover-dark">
+                            <div class="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center mr-4 dark:bg-primary">
+                                <i class="fas fa-envelope text-white dark:text-secondary"></i>
                             </div>
                             <div>
-                                <p class="font-medium text-gray-900">Email</p>
-                                <p class="text-gray-600">vishwahari4164@gmail.com</p>
+                                <p class="font-medium text-text-dark dark:text-text-light">Email</p>
+                                <p class="text-gray-600 dark:text-gray-400">vishwahari4164@gmail.com</p>
                             </div>
                         </div>
-                        <div class="flex items-center hover:translate-x-2 transition-transform duration-300">
-                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 hover:scale-110 transition-transform duration-300">
-                                <i class="fas fa-phone text-white"></i>
+                        <div class="flex items-center p-4 bg-card-light rounded-lg shadow-lg hover:bg-hover-light transition-colors duration-300 dark:bg-card-dark dark:hover:bg-hover-dark">
+                            <div class="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center mr-4 dark:bg-primary">
+                                <i class="fas fa-phone text-white dark:text-secondary"></i>
                             </div>
                             <div>
-                                <p class="font-medium text-gray-900">Phone</p>
-                                <p class="text-gray-600">+91 93440 83607</p>
+                                <p class="font-medium text-text-dark dark:text-text-light">Phone</p>
+                                <p class="text-gray-600 dark:text-gray-400">+91 93440 83607</p>
                             </div>
                         </div>
-                        <div class="flex items-center hover:translate-x-2 transition-transform duration-300">
-                            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 hover:scale-110 transition-transform duration-300">
-                                <i class="fas fa-map-marker-alt text-white"></i>
+                        <div class="flex items-center p-4 bg-card-light rounded-lg shadow-lg hover:bg-hover-light transition-colors duration-300 dark:bg-card-dark dark:hover:bg-hover-dark">
+                            <div class="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center mr-4 dark:bg-primary">
+                                <i class="fas fa-map-marker-alt text-white dark:text-secondary"></i>
                             </div>
                             <div>
-                                <p class="font-medium text-gray-900">Location</p>
-                                <p class="text-gray-600">Erode, Tamil Nadu, India</p>
+                                <p class="font-medium text-text-dark dark:text-text-light">Location</p>
+                                <p class="text-gray-600 dark:text-gray-400">Erode, Tamil Nadu, India</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Connect With Me</h3>
+                    <h3 class="text-text-dark text-2xl font-semibold mb-6 dark:text-text-light">Connect With Me</h3>
                     <div class="space-y-6">
-                        <div class="p-6 bg-white rounded-xl shadow-lg border border-gray-100">
-                            <div class="text-center mb-6">
-                                <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-3">
-                                    <i class="fas fa-envelope text-white text-2xl"></i>
-                                </div>
-                                <h4 class="text-xl font-semibold text-gray-900 mb-1">Send Message</h4>
-                                <p class="text-gray-500 text-sm">Get in touch with me directly</p>
+                        <form action="https://formspree.io/f/mjkodkbv" method="POST" id="contactForm" class="p-6 bg-card-light rounded-xl shadow-lg hover:bg-hover-light transition-colors duration-300 space-y-5 dark:bg-card-dark dark:hover:bg-hover-dark">
+                            <div class="space-y-2">
+                                <label for="contactName" class="block text-gray-600 text-sm font-medium dark:text-gray-400">Name</label>
+                                <input type="text" id="contactName" name="name" placeholder="Enter your full name" class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-secondary-light text-text-dark focus:ring-2 focus:ring-primary-light focus:border-primary-light transition-colors duration-300 dark:bg-secondary dark:text-text-light dark:border-gray-700 dark:focus:ring-primary dark:focus:border-primary" required>
                             </div>
-                            
-                            <form action="https://formspree.io/f/mjkodkbv" method="POST" id="contactForm" class="space-y-5">
-                                <div class="space-y-2">
-                                    <label for="contactName" class="block text-sm font-medium text-gray-700">Name</label>
-                                    <input type="text" id="contactName" name="name" placeholder="Enter your full name" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 bg-gray-50 hover:bg-white" required>
-                                </div>
-                                
-                                <div class="space-y-2">
-                                    <label for="contactEmail" class="block text-sm font-medium text-gray-700">Email</label>
-                                    <input type="email" id="contactEmail" name="email" placeholder="Enter your email address" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 bg-gray-50 hover:bg-white" required>
-                                </div>
-                                
-                                <div class="space-y-2">
-                                    <label for="contactMessage" class="block text-sm font-medium text-gray-700">Message</label>
-                                    <textarea id="contactMessage" name="message" placeholder="Tell me what you'd like to discuss..." rows="4" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-300 bg-gray-50 hover:bg-white resize-none" required></textarea>
-                                </div>
-                                
-                                <button type="submit" class="w-full bg-gradient-to-r from-primary to-blue-600 text-white py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 font-semibold text-lg hover:scale-105 hover:shadow-lg transform">
-                                    <i class="fas fa-paper-plane mr-2"></i>
-                                    Send Message
-                                </button>
-                            </form>
-                        </div>
-                        
-                        <a href="https://www.linkedin.com/in/vishwahari-r/" target="_blank" class="flex items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 border border-gray-200">
-                            <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mr-4 hover:scale-110 transition-transform duration-300">
-                                <i class="fab fa-linkedin text-white text-xl"></i>
+                            <div class="space-y-2">
+                                <label for="contactEmail" class="block text-gray-600 text-sm font-medium dark:text-gray-400">Email</label>
+                                <input type="email" id="contactEmail" name="email" placeholder="Enter your email address" class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-secondary-light text-text-dark focus:ring-2 focus:ring-primary-light focus:border-primary-light transition-colors duration-300 dark:bg-secondary dark:text-text-light dark:border-gray-700 dark:focus:ring-primary dark:focus:border-primary" required>
                             </div>
-                            <div>
-                                <p class="font-medium text-gray-900">Connect on LinkedIn</p>
-                                <p class="text-gray-600">Professional Network</p>
+                            <div class="space-y-2">
+                                <label for="contactMessage" class="block text-gray-600 text-sm font-medium dark:text-gray-400">Message</label>
+                                <textarea id="contactMessage" name="message" placeholder="Tell me what you'd like to discuss..." rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-secondary-light text-text-dark focus:ring-2 focus:ring-primary-light focus:border-primary-light transition-colors duration-300 resize-none dark:bg-secondary dark:text-text-light dark:border-gray-700 dark:focus:ring-primary dark:focus:border-primary" required></textarea>
                             </div>
-                            <i class="fas fa-arrow-right text-primary ml-auto"></i>
-                        </a>
-                        
-                        <a href="https://github.com/Vishwahari" target="_blank" class="flex items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 border border-gray-200">
-                            <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mr-4 hover:scale-110 transition-transform duration-300">
-                                <i class="fab fa-github text-white text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="font-medium text-gray-900">View GitHub</p>
-                                <p class="text-gray-600">Check out my projects</p>
-                            </div>
-                            <i class="fas fa-arrow-right text-primary ml-auto"></i>
-                        </a>
+                            <button type="submit" class="w-full bg-primary-light text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors duration-300 font-semibold text-lg dark:bg-primary dark:text-secondary dark:hover:bg-green-600">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                Send Message
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-secondary text-white py-8 fade-in-section">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <footer class="bg-secondary-light text-gray-600 py-8 text-center dark:bg-secondary dark:text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p>&copy; 2025 Vishwahari. All rights reserved.</p>
             <div class="flex justify-center space-x-6 mt-4">
-                <a href="#" class="text-gray-400 hover:text-white transition-all duration-300 hover:scale-125">
+                <a href="#" class="text-gray-600 hover:text-primary-light transition-all duration-300 hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
                     <i class="fab fa-linkedin text-xl"></i>
                 </a>
-                <a href="#" class="text-gray-400 hover:text-white transition-all duration-300 hover:scale-125">
+                <a href="#" class="text-gray-600 hover:text-primary-light transition-all duration-300 hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
                     <i class="fab fa-github text-xl"></i>
                 </a>
-                <a href="#" class="text-gray-400 hover:text-white transition-all duration-300 hover:scale-125">
+                <a href="#" class="text-gray-600 hover:text-primary-light transition-all duration-300 hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
                     <i class="fab fa-twitter text-xl"></i>
                 </a>
             </div>
@@ -698,97 +588,6 @@
     </footer>
 
     <script>
-        // Canvas Background Animation
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Set canvas size
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-        
-        // Particle system
-        const particles = [];
-        const particleCount = 50;
-        
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
-                this.opacity = Math.random() * 0.5 + 0.2;
-            }
-            
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-            
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
-                ctx.fill();
-            }
-        }
-        
-        // Initialize particles
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-        
-        // Animation loop
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-            
-            requestAnimationFrame(animate);
-        }
-        
-        animate();
-        
-        // Particle effect on hover
-        function createParticles(e) {
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            for (let i = 0; i < 5; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
-                particle.style.background = '#3B82F6';
-                particle.style.width = '4px';
-                particle.style.height = '4px';
-                particle.style.borderRadius = '50%';
-                particle.style.position = 'absolute';
-                particle.style.pointerEvents = 'none';
-                
-                document.body.appendChild(particle);
-                
-                setTimeout(() => {
-                    particle.remove();
-                }, 1000);
-            }
-        }
-        
-        // Add particle effect to interactive elements
-        document.addEventListener('mousemove', createParticles);
-        
         // Mobile menu toggle
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             document.getElementById('mobile-menu').classList.toggle('hidden');
@@ -805,7 +604,6 @@
                         block: 'start'
                     });
                 }
-                // Close mobile menu if open
                 document.getElementById('mobile-menu').classList.add('hidden');
             });
         });
@@ -815,7 +613,7 @@
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -823,12 +621,11 @@
                 }
             });
         }, observerOptions);
-        
-        // Observe all fade-in sections
+
         document.querySelectorAll('.fade-in-section').forEach(section => {
             observer.observe(section);
         });
-        
+
         // Animate skill bars when they come into view
         const skillObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -836,81 +633,87 @@
                     const skillBar = entry.target;
                     const width = skillBar.getAttribute('data-width');
                     setTimeout(() => {
-                        skillBar.style.width = width;
+                        skillBar.style.width = width + '%';
                     }, 200);
+                    skillObserver.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.5 });
-        
+
         document.querySelectorAll('.skill-bar').forEach(bar => {
             skillObserver.observe(bar);
         });
-        
+
         // Contact form functionality with Formspree
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
             const form = this;
             const submitButton = form.querySelector('button[type="submit"]');
-            const originalText = submitButton.textContent;
+            const originalText = submitButton.innerHTML;
             
-            // Show loading state
-            submitButton.textContent = 'Sending...';
+            submitButton.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Sending...`;
             submitButton.disabled = true;
             
-            // Get form data
             const formData = new FormData(form);
             
-            // Submit to Formspree
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
                 if (response.ok) {
-                    // Success
                     alert('Thank you! Your message has been sent successfully. I will get back to you soon!');
                     form.reset();
                 } else {
-                    // Error
-                    alert('Sorry, there was an error sending your message. Please try again or email me directly at vishwahari4164@gmail.com');
+                    alert('Sorry, there was an error sending your message. Please try again.');
                 }
-            })
-            .catch(error => {
-                // Network error
-                alert('Sorry, there was an error sending your message. Please try again or email me directly at vishwahari4164@gmail.com');
+            } catch (error) {
+                alert('Sorry, there was a network error. Please try again later.');
                 console.error('Error:', error);
-            })
-            .finally(() => {
-                // Reset button
-                submitButton.textContent = originalText;
+            } finally {
+                submitButton.innerHTML = originalText;
                 submitButton.disabled = false;
-            });
+            }
         });
-        
-        // Form submission (if form exists)
-        const form = document.querySelector('form');
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                // Add your form submission logic here
-                alert('Thank you for your message! I will get back to you soon.');
-            });
+
+        // Theme toggle functionality
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeToggleDarkIconMobile = document.getElementById('theme-toggle-dark-icon-mobile');
+        const themeToggleLightIconMobile = document.getElementById('theme-toggle-light-icon-mobile');
+        const themeToggleMobileMenuDarkIcon = document.getElementById('theme-toggle-dark-icon-mobile-menu');
+        const themeToggleMobileMenuLightIcon = document.getElementById('theme-toggle-light-icon-mobile-menu');
+
+        function setThemeIcons(isDarkMode) {
+            if (themeToggleLightIcon) themeToggleLightIcon.classList.toggle('hidden', !isDarkMode);
+            if (themeToggleDarkIcon) themeToggleDarkIcon.classList.toggle('hidden', isDarkMode);
+            if (themeToggleLightIconMobile) themeToggleLightIconMobile.classList.toggle('hidden', !isDarkMode);
+            if (themeToggleDarkIconMobile) themeToggleDarkIconMobile.classList.toggle('hidden', isDarkMode);
+            if (themeToggleMobileMenuLightIcon) themeToggleMobileMenuLightIcon.classList.toggle('hidden', !isDarkMode);
+            if (themeToggleMobileMenuDarkIcon) themeToggleMobileMenuDarkIcon.classList.toggle('hidden', isDarkMode);
         }
-        
-        // Add hover effects to cards
-        document.querySelectorAll('.card-hover').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-8px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
+
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            setThemeIcons(true);
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
+            setThemeIcons(false);
+        }
+
+        const toggleTheme = () => {
+            const isDarkMode = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('color-theme', isDarkMode ? 'dark' : 'light');
+            setThemeIcons(isDarkMode);
+        };
+
+        if (document.getElementById('theme-toggle')) document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+        if (document.getElementById('theme-toggle-mobile')) document.getElementById('theme-toggle-mobile').addEventListener('click', toggleTheme);
+        if (document.getElementById('theme-toggle-mobile-menu')) document.getElementById('theme-toggle-mobile-menu').addEventListener('click', toggleTheme);
     </script>
 </body>
 </html>
