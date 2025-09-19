@@ -11,7 +11,7 @@
             theme: {
                 extend: {
                     colors: {
-                        // Dark Theme Colors (Updated)
+                        // Dark Theme Colors
                         'primary': '#059669', // Emerald Green
                         'secondary': '#1C2023', // Dark Slate Gray
                         'bg-dark': '#121417', // Deep Charcoal
@@ -19,7 +19,7 @@
                         'card-dark': '#1E2328', // Slightly lighter charcoal
                         'hover-dark': '#2C323B', // Subtle hover dark
                         
-                        // New Light Theme Colors (Cleaned up)
+                        // Light Theme Colors (Cleaned up)
                         'primary-light': '#3B82F6', // Blue
                         'secondary-light': '#F9FAFB', // Light Gray
                         'bg-light': '#FFFFFF', // Pure White
@@ -33,7 +33,6 @@
                         'pulse-once': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) 1',
                         'spin-slow': 'spin 3s linear infinite',
                         'typing': 'typing 3.5s steps(30, end), blink-caret .75s step-end infinite',
-                        // Removed 'blob' animation as the blobs are being removed
                     },
                     keyframes: {
                         fadeInUp: {
@@ -52,7 +51,6 @@
                             '0%, 100%': { 'border-color': 'transparent' },
                             '50%': { 'border-color': 'currentColor' }
                         },
-                        // Removed blob keyframes
                     }
                 }
             }
@@ -97,15 +95,16 @@
         .skill-bar {
             transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Removed animation-delay for blobs */
-        /* Updated light-bg-gradient for simplicity */
         .light-bg-gradient {
-            background-image: none; /* No gradient in light mode */
-            opacity: 0; /* Make it invisible */
+            background-image: none;
+            opacity: 0;
         }
         .dark .light-bg-gradient {
-            opacity: 1; /* Keep gradient for dark mode if desired, or set to none as well */
-            background-image: linear-gradient(135deg, #1A3E38, #1C2023, #1A202C); /* Example dark gradient */
+            opacity: 1;
+            background-image: linear-gradient(135deg, #1A3E38, #1C2023, #1A202C);
+        }
+        .social-link {
+            transition: color 0.3s ease, transform 0.3s ease;
         }
     </style>
 </head>
@@ -169,7 +168,21 @@
                 <p class="text-gray-600 text-xl md:text-2xl mb-8 font-light animate-slide-in-right dark:text-gray-400">
                     AI & ML Enthusiast | Java Developer | Problem Solver
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <div class="flex space-x-6 justify-center md:justify-start mb-8 animate-slide-in-right animation-delay-400">
+                    <a href="https://www.linkedin.com/in/vishwahari-r" target="_blank" class="social-link text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary transform hover:scale-125">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                    <a href="https://github.com/Vishwahari" target="_blank" class="social-link text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary transform hover:scale-125">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="https://leetcode.com/u/vishwahari/" target="_blank" class="social-link text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary transform hover:scale-125">
+                        <i class="fas fa-code text-2xl"></i>
+                    </a>
+                    <a href="https://www.hackerrank.com/profile/vishwahari06" target="_blank" class="social-link text-text-dark hover:text-primary-light dark:text-gray-400 dark:hover:text-primary transform hover:scale-125">
+                        <i class="fab fa-hackerrank text-2xl"></i>
+                    </a>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start animate-fade-in-up animation-delay-600">
                     <a href="Resume.pdf" download class="bg-primary-light text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors duration-300 font-semibold shadow-lg flex items-center justify-center transform hover:scale-105 animate-pulse-once dark:bg-primary dark:hover:bg-green-600 dark:text-secondary">
                         <i class="fas fa-download mr-2"></i>
                         Download CV
@@ -207,14 +220,17 @@
                         🌱 I'm always on the lookout for new challenges and opportunities to grow my skills, collaborate with others, and contribute to innovative projects.
                     </p>
                     <div class="flex space-x-4 pt-4">
-                        <a href="#" class="text-text-dark hover:text-primary-light transition-colors duration-300 transform hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
+                        <a href="https://www.linkedin.com/in/vishwahari-r" target="_blank" class="text-text-dark hover:text-primary-light transition-colors duration-300 transform hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
                             <i class="fab fa-linkedin text-2xl"></i>
                         </a>
-                        <a href="#" class="text-text-dark hover:text-primary-light transition-colors duration-300 transform hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
+                        <a href="https://github.com/Vishwahari" target="_blank" class="text-text-dark hover:text-primary-light transition-colors duration-300 transform hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
                             <i class="fab fa-github text-2xl"></i>
                         </a>
-                        <a href="#" class="text-text-dark hover:text-primary-light transition-colors duration-300 transform hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
-                            <i class="fab fa-twitter text-2xl"></i>
+                        <a href="https://leetcode.com/u/vishwahari/" target="_blank" class="text-text-dark hover:text-primary-light transition-colors duration-300 transform hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
+                            <i class="fas fa-code text-2xl"></i>
+                        </a>
+                        <a href="https://www.hackerrank.com/profile/vishwahari06" target="_blank" class="text-text-dark hover:text-primary-light transition-colors duration-300 transform hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
+                            <i class="fab fa-hackerrank text-2xl"></i>
                         </a>
                     </div>
                 </div>
@@ -345,7 +361,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-text-dark text-4xl font-bold mb-2 dark:text-text-light">Work Experience</h2>
-                <div class="w-24 h-1 bg-primary-light mx-auto dark:bg-primary"></div>
+                <div class="w-24 h-1 bg-primary-light dark:bg-primary mx-auto"></div>
             </div>
             <div class="space-y-12">
                 <div class="relative pl-8 md:pl-16 after:content-[''] after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1 after:bg-primary-light/50 hover:after:bg-primary-light transition-colors duration-300 group dark:after:bg-primary/50 dark:hover:after:bg-primary">
@@ -387,7 +403,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-text-dark text-4xl font-bold mb-2 dark:text-text-light">Featured Projects</h2>
-                <div class="w-24 h-1 bg-primary-light mx-auto dark:bg-primary"></div>
+                <div class="w-24 h-1 bg-primary-light dark:bg-primary mx-auto"></div>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="bg-card-light rounded-lg shadow-lg overflow-hidden hover:bg-hover-light transition-colors duration-300 group dark:bg-card-dark dark:hover:bg-hover-dark">
@@ -404,6 +420,7 @@
                         <p class="text-gray-600 mb-4 font-light dark:text-gray-400">
                             AI-powered robot to detect and remove weeds in paddy fields. Developed an AI robot using Python and OpenCV for weed detection and removal.
                         </p>
+                        
                         <div class="flex flex-wrap gap-2 mb-4">
                             <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">Python</span>
                             <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">OpenCV</span>
@@ -412,9 +429,25 @@
                             <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">Arduino</span>
                         </div>
                         <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-                            <span class="font-medium">Project in Development</span>
+                            <a href="#" class="project-image-link text-primary-light hover:underline font-medium flex items-center space-x-2 dark:text-primary" data-image-src="process.png" data-image-alt="Eco Weed AI Robot Flowchart">
+                                <span>View Flowchart</span>
+                                <i class="fas fa-eye text-sm"></i>
+                            </a>
+                            <a href="#" class="project-image-link text-primary-light hover:underline font-medium flex items-center space-x-2 dark:text-primary" data-image-src="eco.png" data-image-alt="Eco Weed AI Robot 3D Model">
+                                <span>View 3D Model</span>
+                                <i class="fas fa-eye text-sm"></i>
+                            </a>
                             <i class="fas fa-arrow-right text-primary-light group-hover:translate-x-1 transition-transform duration-300 dark:text-primary"></i>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Image Modal Structure -->
+                <div id="image-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+                    <div class="bg-card-dark p-4 rounded-lg shadow-xl max-w-3xl max-h-[90%] overflow-auto relative">
+                        <button id="close-modal" class="absolute top-2 right-2 text-white text-2xl font-bold p-2 hover:text-gray-300">&times;</button>
+                        <img id="modal-image" src="" alt="Project Image" class="w-full h-auto rounded-lg">
+                        <p id="modal-caption" class="text-text-light text-center mt-2"></p>
                     </div>
                 </div>
 
@@ -438,7 +471,7 @@
                             <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">scikit-learn</span>
                             <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">Plotly</span>
                         </div>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4 text-sm text-gray-500 dark:text-gray-400">
                             <a href="https://github.com/Vishwahari/Mental-Health-Prediction-App-Based-on-Lifestyle-Data" target="_blank" class="text-primary-light hover:underline font-medium flex items-center space-x-2 dark:text-primary">
                                 <span>Source Code</span>
                                 <i class="fas fa-external-link-alt text-sm"></i>
@@ -468,10 +501,14 @@
                             <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">CSS</span>
                             <span class="bg-primary-light/20 text-primary-light px-2 py-1 rounded text-xs font-medium dark:bg-primary/20 dark:text-primary">JavaScript</span>
                         </div>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4 text-sm text-gray-500 dark:text-gray-400">
                             <a href="https://github.com/Vishwahari/Edubot" target="_blank" class="text-primary-light hover:underline font-medium flex items-center space-x-2 dark:text-primary">
                                 <span>Source Code</span>
                                 <i class="fas fa-external-link-alt text-sm"></i>
+                            </a>
+                            <a href="https://edubot-kr5a.onrender.com" target="_blank" class="text-primary-light hover:underline font-medium flex items-center space-x-2 dark:text-primary ml-4">
+                                <span>View Website</span>
+                                <i class="fas fa-globe text-sm"></i>
                             </a>
                             <i class="fas fa-arrow-right text-primary-light group-hover:translate-x-1 transition-transform duration-300 dark:text-primary"></i>
                         </div>
@@ -485,19 +522,46 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-text-dark text-4xl font-bold mb-2 dark:text-text-light">Education</h2>
-                <div class="w-24 h-1 bg-primary-light mx-auto dark:bg-primary"></div>
+                <div class="w-24 h-1 bg-primary-light dark:bg-primary mx-auto"></div>
             </div>
-            <div class="max-w-3xl mx-auto bg-hover-light p-8 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 dark:bg-hover-dark">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-primary-light rounded-full flex items-center justify-center mx-auto mb-4 animate-spin-slow dark:bg-primary">
-                        <i class="fas fa-graduation-cap text-white dark:text-secondary"></i>
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="bg-hover-light p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 dark:bg-hover-dark">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center mb-2 dark:bg-primary mx-auto">
+                            <i class="fas fa-graduation-cap text-white dark:text-secondary"></i>
+                        </div>
+                        <h3 class="text-text-dark text-2xl font-semibold mb-1 dark:text-text-light">B.E – Artificial Intelligence and Machine Learning</h3>
+                        <p class="text-primary-light font-medium mb-1 dark:text-primary">K. S. Rangasamy College of Technology, Tiruchengode, TN</p>
+                        <p class="text-gray-600 mb-1 dark:text-gray-400">October 2022 – May 2026</p>
+                        <p class="text-gray-600 mb-2 dark:text-gray-400">CGPA: 8.40</p>
+                        <p class="text-gray-600 leading-relaxed dark:text-gray-400">
+                            Pursuing a comprehensive degree in AI & ML with a focus on machine learning algorithms, deep learning, computer vision, and practical applications in real-world scenarios.
+                        </p>
                     </div>
-                    <h3 class="text-text-dark text-2xl font-semibold mb-2 dark:text-text-light">B.E – Artificial Intelligence and Machine Learning</h3>
-                    <p class="text-primary-light font-medium mb-2 dark:text-primary">K. S. Rangasamy College of Technology, Tiruchengode</p>
-                    <p class="text-gray-600 mb-4 dark:text-gray-400">2022 – 2026</p>
-                    <p class="text-gray-600 leading-relaxed dark:text-gray-400">
-                        Pursuing a comprehensive degree in AI & ML with a focus on machine learning algorithms, deep learning, computer vision, and practical applications in real-world scenarios.
-                    </p>
+                </div>
+
+                <div class="bg-hover-light p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 dark:bg-hover-dark">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center mb-2 dark:bg-primary mx-auto">
+                            <i class="fas fa-school text-white dark:text-secondary"></i>
+                        </div>
+                        <h3 class="text-text-dark text-2xl font-semibold mb-1 dark:text-text-light">HSE (+2)</h3>
+                        <p class="text-primary-light font-medium mb-1 dark:text-primary">Jaycees Matriculation Higher Secondary School, Erode, TN</p>
+                        <p class="text-gray-600 mb-1 dark:text-gray-400">June 2021 – May 2022</p>
+                        <p class="text-gray-600 mb-2 dark:text-gray-400">Percentage: 79.5%</p>
+                    </div>
+                </div>
+
+                <div class="bg-hover-light p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 dark:bg-hover-dark">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center mb-2 dark:bg-primary mx-auto">
+                            <i class="fas fa-school text-white dark:text-secondary"></i>
+                        </div>
+                        <h3 class="text-text-dark text-2xl font-semibold mb-1 dark:text-text-light">SSLC (10th)</h3>
+                        <p class="text-primary-light font-medium mb-1 dark:text-primary">Jaycees Matriculation Higher Secondary School, Erode, TN</p>
+                        <p class="text-gray-600 mb-1 dark:text-gray-400">June 2019 – May 2020</p>
+                        <p class="text-gray-600 mb-2 dark:text-gray-400">Percentage: 92.8%</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -564,6 +628,26 @@
                                 Send Message
                             </button>
                         </form>
+                        <a href="https://www.linkedin.com/in/vishwahari-r" target="_blank" class="flex items-center p-4 bg-card-light rounded-lg shadow-lg hover:bg-hover-light transition-colors duration-300 dark:bg-card-dark dark:hover:bg-hover-dark">
+                            <div class="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center mr-4 dark:bg-primary">
+                                <i class="fab fa-linkedin text-white dark:text-secondary"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-text-dark dark:text-text-light">Connect on LinkedIn</p>
+                                <p class="text-gray-600 dark:text-gray-400">Professional Network</p>
+                            </div>
+                            <i class="fas fa-arrow-right text-primary-light ml-auto dark:text-primary"></i>
+                        </a>
+                        <a href="https://github.com/Vishwahari" target="_blank" class="flex items-center p-4 bg-card-light rounded-lg shadow-lg hover:bg-hover-light transition-colors duration-300 dark:bg-card-dark dark:hover:bg-hover-dark">
+                            <div class="w-12 h-12 bg-primary-light rounded-full flex items-center justify-center mr-4 dark:bg-primary">
+                                <i class="fab fa-github text-white dark:text-secondary"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-text-dark dark:text-text-light">View GitHub</p>
+                                <p class="text-gray-600 dark:text-gray-400">Check out my projects</p>
+                            </div>
+                            <i class="fas fa-arrow-right text-primary-light ml-auto dark:text-primary"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -574,14 +658,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p>&copy; 2025 Vishwahari. All rights reserved.</p>
             <div class="flex justify-center space-x-6 mt-4">
-                <a href="#" class="text-gray-600 hover:text-primary-light transition-all duration-300 hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
+                <a href="https://www.linkedin.com/in/vishwahari-r" class="text-gray-600 hover:text-primary-light transition-all duration-300 hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
                     <i class="fab fa-linkedin text-xl"></i>
                 </a>
-                <a href="#" class="text-gray-600 hover:text-primary-light transition-all duration-300 hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
+                <a href="https://github.com/Vishwahari" class="text-gray-600 hover:text-primary-light transition-all duration-300 hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
                     <i class="fab fa-github text-xl"></i>
                 </a>
-                <a href="#" class="text-gray-600 hover:text-primary-light transition-all duration-300 hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
-                    <i class="fab fa-twitter text-xl"></i>
+                <a href="https://leetcode.com/u/vishwahari/" class="text-gray-600 hover:text-primary-light transition-all duration-300 hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
+                    <i class="fas fa-code text-xl"></i>
+                </a>
+                <a href="https://www.hackerrank.com/profile/vishwahari06" class="text-gray-600 hover:text-primary-light transition-all duration-300 hover:scale-125 dark:text-gray-400 dark:hover:text-primary">
+                    <i class="fab fa-hackerrank text-xl"></i>
                 </a>
             </div>
         </div>
@@ -714,6 +801,31 @@
         if (document.getElementById('theme-toggle')) document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
         if (document.getElementById('theme-toggle-mobile')) document.getElementById('theme-toggle-mobile').addEventListener('click', toggleTheme);
         if (document.getElementById('theme-toggle-mobile-menu')) document.getElementById('theme-toggle-mobile-menu').addEventListener('click', toggleTheme);
+
+        // Image modal functionality
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalCaption = document.getElementById('modal-caption');
+        const closeModalButton = document.getElementById('close-modal');
+
+        document.querySelectorAll('.project-image-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                modalImage.src = this.dataset.imageSrc;
+                modalCaption.textContent = this.dataset.imageAlt;
+                imageModal.classList.remove('hidden');
+            });
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            imageModal.classList.add('hidden');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target == imageModal) {
+                imageModal.classList.add('hidden');
+            }
+        });
     </script>
 </body>
 </html>
